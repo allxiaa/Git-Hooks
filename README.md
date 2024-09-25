@@ -1,6 +1,6 @@
 ###                       Git-Hooks Gitleaks
 
-Додайте цей скрипт у .git/hooks/pre-commit.
+Додайте цей скрипт у .git/hooks/pre-commit. 
 ```sh
 cp pre-commit_hook.sh PATH_TO_PROJECT_NAME/.git/hooks/pre-commit
 ```
