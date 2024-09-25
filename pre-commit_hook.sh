@@ -18,7 +18,7 @@ if [[ "$GITLEAKS_ENABLED" != "true" ]]; then
 fi
 
 # Перевірка, чи встановлений gitleaks
-if [[ -f "$HOME/bin/gitleaks" ]]; then
+if ! command -v gitleaks &> /dev/null; then
     echo "Gitleaks не встановлений. Починається автоматична установка..."
 
     # Завантаження та встановлення Gitleaks
