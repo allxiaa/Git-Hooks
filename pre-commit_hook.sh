@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # allxiaa
-# version 1.0
+# version 1.1
 # Pre-commit hook для автоматичного встановлення gitleaks
 
 # Налаштування змінних
@@ -29,13 +29,24 @@ if ! command -v gitleaks &> /dev/null; then
         exit 1
     fi
 
+    # Створення директорії ~/bin, якщо її не існує
+    mkdir -p ~/bin
+
     # Розпакування та встановлення
-    sudo tar xf gitleaks_${GITLEAKS_VERSION}_${TARGETOS}_${TARGETARCH}.tar.gz -C /usr/local/bin gitleaks
+    tar xf gitleaks_${GITLEAKS_VERSION}_${TARGETOS}_${TARGETARCH}.tar.gz -C ~/bin gitleaks
     if [[ $? -ne 0 ]]; then
         echo "Помилка інсталяції Gitleaks."
+	    rm -rf gitleaks_${GITLEAKS_VERSION}_${TARGETOS}_${TARGETARCH}.tar.gz
         exit 1
     fi
     echo "Gitleaks успішно встановлений."
+    rm -rf gitleaks_${GITLEAKS_VERSION}_${TARGETOS}_${TARGETARCH}.tar.gz
+    
+    # Додавання ~/bin до $PATH, якщо це необхідно
+    if [[ ":$PATH:" != *":$HOME/bin:"* ]]; then
+        export PATH="$HOME/bin:$PATH"
+    fi
+
 fi
 
 # Запуск Gitleaks перед комітом
