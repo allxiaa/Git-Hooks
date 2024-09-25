@@ -2,6 +2,7 @@
 
 Додайте цей скрипт у .git/hooks/pre-commit. 
 ```sh
+curl -s https://raw.githubusercontent.com/allxiaa/Git-Hooks/refs/heads/main/pre-commit_hook.sh -L -o pre-commit_hook.sh
 cp pre-commit_hook.sh PATH_TO_PROJECT_NAME/.git/hooks/pre-commit
 ```
 
