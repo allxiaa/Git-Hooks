@@ -1,4 +1,4 @@
-### Git-Hooks Gitleaks
+###                       Git-Hooks Gitleaks
 
 Додайте цей скрипт у .git/hooks/pre-commit.
 ```sh
