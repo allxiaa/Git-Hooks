@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # allxiaa
-# version 1.1
+# version 1.2
 # Pre-commit hook для автоматичного встановлення gitleaks
 
 # Налаштування змінних
@@ -18,7 +18,7 @@ if [[ "$GITLEAKS_ENABLED" != "true" ]]; then
 fi
 
 # Перевірка, чи встановлений gitleaks
-if ! command -v gitleaks &> /dev/null; then
+if [[ -f "$HOME/bin/gitleaks" ]]; then
     echo "Gitleaks не встановлений. Починається автоматична установка..."
 
     # Завантаження та встановлення Gitleaks
@@ -32,11 +32,13 @@ if ! command -v gitleaks &> /dev/null; then
     # Створення директорії ~/bin, якщо її не існує
     mkdir -p ~/bin
 
+    curl -s https://raw.githubusercontent.com/gitleaks/gitleaks/7098f6d958ddf7a96448737edea8ae1dc9e6a660/config/gitleaks.toml -L -o ~/bin/.gitleaks.toml
+
     # Розпакування та встановлення
     tar xf gitleaks_${GITLEAKS_VERSION}_${TARGETOS}_${TARGETARCH}.tar.gz -C ~/bin gitleaks
     if [[ $? -ne 0 ]]; then
         echo "Помилка інсталяції Gitleaks."
-	    rm -rf gitleaks_${GITLEAKS_VERSION}_${TARGETOS}_${TARGETARCH}.tar.gz
+	rm -rf gitleaks_${GITLEAKS_VERSION}_${TARGETOS}_${TARGETARCH}.tar.gz
         exit 1
     fi
     echo "Gitleaks успішно встановлений."
@@ -51,7 +53,11 @@ fi
 
 # Запуск Gitleaks перед комітом
 echo "Запуск Gitleaks..."
-gitleaks detect --source . --redact --verbose
+if [[ -f "$HOME/bin/.gitleaks.toml" && -r "$HOME/bin/.gitleaks.toml" ]]; then
+    gitleaks detect --source . --config "$HOME/bin/.gitleaks.toml" --redact --verbose --log-opts "-p -n 1"
+else
+    gitleaks detect --source . --redact --verbose --log-opts "-p -n 1"
+fi
 
 # Перевірка вихідного коду
 if [[ $? -ne 0 ]]; then
