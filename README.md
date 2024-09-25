@@ -1,10 +1,13 @@
 ###                       Git-Hooks Gitleaks
 
-Додайте цей скрипт у .git/hooks/pre-commit. 
+Інсталяція:
 ```sh
-curl -s https://raw.githubusercontent.com/allxiaa/Git-Hooks/refs/heads/main/pre-commit_hook.sh -L -o pre-commit_hook.sh
-cp pre-commit_hook.sh PATH_TO_PROJECT_NAME/.git/hooks/pre-commit
+curl -s https://raw.githubusercontent.com/allxiaa/Git-Hooks/refs/heads/main/pre-commit_hook.sh -L -o pre-commit_hook.sh && \
+chmod +x pre-commit_hook.sh && \
+mv pre-commit_hook.sh .git/hooks/pre-commit && \
+git config hooks.gitleaks-enable true
 ```
+Або додайте цей скрипт у .git/hooks/pre-commit. 
 
 Надайте йому права на виконання:
 ```sh
