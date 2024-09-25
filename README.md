@@ -14,3 +14,8 @@ chmod +x .git/hooks/pre-commit
 ```sh
 git config hooks.gitleaks-enable true
 ```
+
+Додайте ~/bin у файл .bashrc або .zshrc:
+```sh
+export PATH="$HOME/bin:$PATH"
+```
